@@ -1,3 +1,4 @@
+import os
 from src.models.alerts.alert import Alert
 from dotenv import load_dotenv
 

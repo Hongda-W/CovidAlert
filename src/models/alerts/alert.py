@@ -3,6 +3,7 @@ from typing import Dict
 from dataclasses import dataclass, field
 from src.models.model import Model
 from src.models.reports.report import Report
+from src.common.mailgun import Mailgun, MailgunException
 
 USStateDict = {}
 
@@ -33,4 +34,13 @@ class Alert(Model):
 
     def notify_if_limit_reached(self) -> None:
         if self.report.current['positiveIncrease'] > self.case_limit:
-            print(f"{self.report.state_name} has more than {self.case_limit} new cases today, number of new cases: {self.case_limit}")
+            print(f"{self.report.state_name} has more than {self.case_limit} new cases today, number of new cases: {self.report.current['positiveIncrease']}")
+            try:
+                Mailgun.send_email(
+                    [self.user_email],
+                    f"Covid-19 Alert for {self.report.state_name}",
+                    f"New cases in {self.report.state_name} has reached over {self.case_limit}. New cases updated today is {self.report.current['positiveIncrease']}.\nSummary:\nNew cases:{self.report.current['positiveIncrease']}\nTotal cases: {self.report.current['positive']}\nTotal tests: {self.report.current['posNeg']}\nTotal deaths: {self.report.current['death']}\nTotal hospitalized: {self.report.current['hospitalized']}\nCurrently hospitalized: {self.report.current['hospitalizedCurrently']}",
+                )
+                print(f"Alert sent to {self.user_email} for {self.report.state_name}.")
+            except MailgunException:
+                print(f"You can't receive email through {email} from mailgun. Please contact the administrator.")

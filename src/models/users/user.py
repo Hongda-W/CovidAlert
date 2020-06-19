@@ -5,6 +5,7 @@ from typing import Dict
 from src.common.utils import Utils
 import src.models.users.errors as UserErrors
 from src.models.alerts.alert import Alert
+from src.common.mailgun import Mailgun, MailgunException
 
 
 @dataclass
@@ -38,6 +39,7 @@ class User(Model):
             raise UserErrors.UserAlreadyRegisteredError(f"{email} has already been registered.")
         except UserErrors.UserNotFoundError:
             User(email, Utils.hash_password(password)).save_to_mongo()
+            cls.welcome(email)
 
         return True
 
@@ -49,6 +51,17 @@ class User(Model):
         for alert in alerts:
             alert.remove_from_mongo()
         return True
+
+    @classmethod
+    def welcome(cls, email: str) -> None:
+        try:
+            Mailgun.send_email(
+                [email],
+                f"Welcome, you signed up for Covid-19 Alerts",
+                f"Thank you for registering your account with us. You can log in and add alerts on our web page. We will notify you through email if new cases in your subscribed region exceeds the threshold you choose.\n\nThank you.",
+            )
+        except MailgunException:
+            print(f"You can't receive email through {email} from mailgun. Please contact the administrator.")
 
     def json(self) -> Dict:
         return {

@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session, url_for, render_template, redirect
+from flask import Blueprint, request, session, url_for, render_template, redirect, flash
 from src.models.users import User, UserErrors
 from src.models.alerts.alert import Alert
 from src.models.users import requires_login
@@ -22,9 +22,10 @@ def register():
         try:
             User.register(email, password)
             session['email'] = email
+            flash("You just registered!", "success")
             return redirect(url_for('.index'))
         except UserErrors.UserError as e:
-            return e.message
+            flash("Can't register with current email", "danger")
 
     return render_template('register.html')
 
@@ -32,17 +33,18 @@ def register():
 @user_blueprint.route('/deregister', methods=['GET', 'POST'])
 def deregister():
     if request.method == 'POST':
-        email = request.form['email']
+        email = session['email']
         password = request.form['password']
         try:
             if User.is_login_valid(email, password):
                 User.deregister(email)
                 session['email'] = None
+                flash("Your account has been removed!", 'warning')
                 return render_template('home.html')
         except UserErrors.UserError as e:
-            return e.message
+            flash("Your password was incorrect", 'danger')
 
-    return render_template('deregister.html')
+    return render_template('deregister.html', email=session['email'])
 
 
 @user_blueprint.route('/login', methods=['GET', 'POST'])
@@ -56,7 +58,7 @@ def login():
                 session['email'] = email
                 return redirect(url_for('.index'))
         except UserErrors.UserError as e:
-            return e.message
+            flash("Your login info was incorrect!", 'danger')
 
     return render_template('login.html')
 
@@ -64,4 +66,5 @@ def login():
 @user_blueprint.route('/logout')
 def logout():
     session['email'] = None
+    flash("Successfully logged out", 'success')
     return redirect(url_for('.login'))

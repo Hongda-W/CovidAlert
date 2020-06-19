@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template
 from src.common.database import Database
 from src.models.users.views import user_blueprint
@@ -5,8 +6,11 @@ from src.models.alerts.views import alert_blueprint
 
 
 app = Flask(__name__)
-app.config.from_object('src.config')
-app.secret_key = "123"
+app.secret_key = os.urandom(64)
+app.config.update(
+    ADMIN=os.environ.get('ADMIN'),
+    DEBUG=os.environ.get('DEBUG')
+)
 
 
 @app.before_first_request
