@@ -1,15 +1,15 @@
-from matplotlib.pyplot import subplots
-from matplotlib.dates import ConciseDateFormatter, AutoDateLocator
-import matplotlib
-matplotlib.pyplot.switch_backend('Agg')
-import uuid
-from typing import Dict, List
 import datetime
 import requests
 import json
+import uuid
+from matplotlib.pyplot import subplots
+from matplotlib.dates import ConciseDateFormatter, AutoDateLocator
+from typing import Dict, List
 from dataclasses import dataclass, field
 from src.models.model import Model
 from src.models.reports.state import State
+import matplotlib
+matplotlib.pyplot.switch_backend('Agg')
 
 
 @dataclass(eq=False)  # cannot compare two alert instances
@@ -25,7 +25,7 @@ class Report(Model):
     def __post_init__(self):
         self.state_code = self.state_code.upper()
         state = State(self.state_code)
-        state.get_info()
+        state.get_info_by_code()
         self.state_name = state.name
         self.state_info = state.info
 

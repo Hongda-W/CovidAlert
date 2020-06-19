@@ -3,12 +3,12 @@ import json
 
 
 class State(object):
-    def __init__(self, code):
+    def __init__(self, code, name=None):
         self.code = code
-        self.name = None
+        self.name = name
         self.info = None
 
-    def get_info(self) -> None:
+    def get_info_by_code(self) -> None:
         if self.code.lower() != "all":
             response = requests.get("https://covidtracking.com/api/v1/states/info.json")
             content = json.loads(response.content)

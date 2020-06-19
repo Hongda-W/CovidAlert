@@ -1,4 +1,4 @@
-# A webapp for subscribe covid-19 cases for U.S. states
+# A webapp for subscribing covid-19 updates for U.S. states
 
 ## Installation
 
