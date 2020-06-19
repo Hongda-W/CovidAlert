@@ -100,7 +100,7 @@ class Report(Model):
                 pos_rates.append(float("nan"))
 
             if death and posneg:
-                death_rates.append(death/posneg*100)
+                death_rates.append(death/positive*100)
             else:
                 death_rates.append(float("nan"))
 

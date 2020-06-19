@@ -2,11 +2,15 @@
 
 {% block content %}
     <header><h1> Create Alert </h1></header>
-    <section class="create-alert-form">
+    <section class="form">
         <form method="post">
             <div class="form-group">
                 <label for="state">State</label>
-                <input type="text" class="form-control" id="state" name="state" placeholder="Colorado"/>
+                <select class="selectpicker form-control" title="Select state or the entire US to track" id="state" name="state">
+                    {% for option in options %}
+                        <option value="{{ option }}">{{ option }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <div class="form-group">
                 <label for="case_limit">Case limit</label>

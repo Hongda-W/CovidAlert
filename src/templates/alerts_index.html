@@ -7,15 +7,15 @@
 <section>
     <div class="list-group mb-3">
         {% for alert in alerts %}
-        <div class="list-group-alert">
+        <li class="list-group-item list-group-item-action">
             <h4>{{ alert.name }}</h4>
             <p>
-                <a href="{{ url_for('alerts.plot_report', alert_id=alert._id) }}">{{ alert.report.state_name }} (New cases: {{ alert.report.current['positiveIncrease'] }}, case limit {{ alert.case_limit }} )</a>
-                <a class="btn btn-secondary ml-3" href="{{ url_for('alerts.edit_alert', alert_id=alert._id) }}">Edit</a>
-                <a class="btn btn-danger ml-2" href="{{ url_for('alerts.delete_alert', alert_id=alert._id) }}">Permanently delete</a>
+                <a href="{{ url_for('alerts.plot_report', alert_id=alert._id) }}">{{ alert.report.state_name }} (New cases: {{ alert.report.current['positiveIncrease'] }}, case limit {{ alert.case_limit }} ) <span class="fa fa-line-chart" style="font-size:30px;color:blue;"></span> </a>
+                <a class="btn btn-secondary float-md-left ml-2 mr-5" href="{{ url_for('alerts.edit_alert', alert_id=alert._id) }}">Edit</a>
+                <a class="btn btn-danger float-md-right" href="{{ url_for('alerts.delete_alert', alert_id=alert._id) }}">Permanently delete <span class="fa fa-trash" style="font-size:30px;color:black;"></span></a>
             </p>
 
-        </div>
+        </li>
         {% endfor %}
     </div>
     <a class="btn btn-primary" href="{{ url_for('alerts.new_alert') }}">

@@ -5,8 +5,11 @@ from src.models.alerts.alert import Alert
 from src.models.reports.report import Report
 from src.common.state import State
 from src.models.users import requires_login
+from src.common.state import code_name
 
 alert_blueprint = Blueprint('alerts', __name__)
+
+state_names = [ele["name"] for ele in code_name]
 
 
 @alert_blueprint.route("/")
@@ -20,12 +23,11 @@ def index():
 @requires_login
 def new_alert():
     if request.method == 'POST':
-        state_name = request.form['state']
-        case_limit = int(float(request.form['case_limit']))
+        state_name = request.form.get('state')
+        case_limit = int(request.form['case_limit'])
 
         try:
             report = Report.find_one_by("state_name", state_name)
-            print(report.state_name)
         except TypeError:
             state = State(None, state_name)
             report = Report(state.code)
@@ -36,7 +38,7 @@ def new_alert():
         alert.save_to_mongo()
         return redirect(url_for('.index'))
 
-    return render_template("new_alert.html")
+    return render_template("new_alert.html", options=state_names)
 
 
 @alert_blueprint.route("/edit/<string:alert_id>", methods=['GET', 'POST'])
