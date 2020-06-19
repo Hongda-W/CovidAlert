@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header><h1>Update Alert</h1></header>
+    <section class="update-alert-form">
+        <form method="post">
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state" name="state" value="{{ alert.report.state_name }}" disabled/>
+            </div>
+            <div class="form-group">
+                <label for="case_limit">Case limit</label>
+                <input type="text" class="form-control" id="case_limit" name="case_limit" placeholder="{{ alert.case_limit }}" value="{{ alert.case_limit }}" aria-describedby="priceLimitHelp"/>
+                <small id="priceLimitHelp" class="form-text text-muted">
+                    Above how many new cases would you like to be notified?
+                </small>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </section>
+{% endblock %}

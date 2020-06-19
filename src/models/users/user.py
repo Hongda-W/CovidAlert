@@ -1,7 +1,7 @@
 import uuid
 from dataclasses import dataclass, field
 from src.models.model import Model
-from typing import Dict, List
+from typing import Dict
 from src.common.utils import Utils
 import src.models.users.errors as UserErrors
 from src.models.alerts.alert import Alert
@@ -42,7 +42,7 @@ class User(Model):
         return True
 
     @classmethod
-    def deregister(cls, email: str, password: str) -> bool:
+    def deregister(cls, email: str) -> bool:
         user = cls.find_by_email(email)
         user.remove_from_mongo()
         alerts = Alert.find_many_by("user_email", email)

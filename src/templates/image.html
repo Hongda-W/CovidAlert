@@ -1,7 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
+    <div class="jumbotron">
+        <header><h2>Current statistics for {{ report.state_name }} </h2></header>
+        <p class="lead">Date updated: {{ report.current['dateString'] }}</p>
+        <hr class="my-4" />
+        <p> New cases: {{ report.current['positiveIncrease'] }} </p>
+        <p> Total cases: {{ report.current['positive'] }} </p>
+        <p> Total tests: {{ report.current['posNeg'] }} </p>
+        <p> Total deaths: {{ report.current['death'] }}</p>
+        <p> Total hospitalized: {{ report.current['hospitalized'] }} </p>
+        <p> Currently hospitalized: {{ report.current['hospitalizedCurrently'] }} </p>
+    </div>
+
     <div class="content container mt-4">
-        <header><h1> Spread of COVID-19 </h1></header>
+        <header><h2> Spread of COVID-19 </h2></header>
         <img src="data:image/png;base64,{{ image }}"/>
     </div>
 {% endblock %}

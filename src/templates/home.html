@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="jumbotron mt-5">
+        <h1 class="display-4">Covid-19 Alert and Visualization</h1>
+        <p class="lead">We inquire historic and current statistics for covid-19 cases in the U.S. We can alert you when new covid-19 cases surpass the threshold of your choice after you subscribe the states of choice or the entire US.</p>
+        <hr class="my-4" />
+        <p>Sign up and get started by adding the states you wish to track. We'll notify you and present you the updated statistics!</p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('users.register') }}">Get started</a>
+    </div>
+{% endblock %}

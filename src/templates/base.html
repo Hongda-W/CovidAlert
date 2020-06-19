@@ -3,11 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <title>COVID-10 Updates</title>
+    <title>COVID-19 Updates</title>
 </head>
 <body>
-<div class="content container mt-2">
-    <a class="navbar-brand" href="/">Covid-19 Updates</a>
+<div class="content container mt-4 mb-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <a class="navbar-brand" href="/">Covid-19 Updates</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="navbarNavAltMarkup" class="collapse navbar-collapse">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{{ url_for('alerts.index') }}">Alerts</a>
+                <a class="nav-item nav-link" href="{{ url_for('users.login') }}">Login</a>
+                <a class="nav-item nav-link" href="{{ url_for('users.logout') }}">Logout</a>
+                <a class="nav-item nav-link" href="{{ url_for('users.register') }}">Sign up</a>
+                <a class="nav-item nav-link" href="{{ url_for('users.deregister') }}">Remove account</a>
+            </div>
+        </div>
+    </nav>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}

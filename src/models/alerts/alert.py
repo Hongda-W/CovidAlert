@@ -2,31 +2,28 @@ import uuid
 from typing import Dict
 from dataclasses import dataclass, field
 from src.models.model import Model
-from src.models.reports.state import State
 from src.models.reports.report import Report
-from src.models.users import User
+
+USStateDict = {}
 
 
 @dataclass(eq=False)
 class Alert(Model):
     collection: str = field(default="alerts", init=False)
     report_id: str
-    case_limit: str
+    case_limit: int
     user_email: str
     _id: str = field(default_factory=lambda: uuid.uuid4().hex)
 
     def __post_init__(self):
         self.report = Report.get_by_id(self.report_id)
-        self.user = User.find_by_email(self.user_email)
 
     def json(self) -> Dict:
         return {
             "_id": self._id,
-            "name": self.report.state_name,
-            "code": self.report.state_code,
             "case_limit": self.case_limit,
             "user_email": self.user_email,
-            "report_id": self.name
+            "report_id": self.report_id
         }
 
     def load_report_details(self):

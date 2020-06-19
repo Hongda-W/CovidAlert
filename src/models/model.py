@@ -6,6 +6,7 @@ from src.common.database import Database
 T = TypeVar('T', bound='Model')
 Database.initialize()
 
+
 class Model(metaclass=ABCMeta):
     collection: str
 
@@ -33,6 +34,7 @@ class Model(metaclass=ABCMeta):
 
     @classmethod
     def find_one_by(cls: Type[T], attribute: str, value: Union[str, Dict]) -> T:
+        print(Database.find_one(cls.collection, {attribute: value}))
         return cls(**Database.find_one(cls.collection, {attribute: value}))
 
     @classmethod

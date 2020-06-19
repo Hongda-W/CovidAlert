@@ -7,7 +7,7 @@ from matplotlib.dates import ConciseDateFormatter, AutoDateLocator
 from typing import Dict, List
 from dataclasses import dataclass, field
 from src.models.model import Model
-from src.models.reports.state import State
+from src.common.state import State
 import matplotlib
 matplotlib.pyplot.switch_backend('Agg')
 
@@ -16,8 +16,8 @@ matplotlib.pyplot.switch_backend('Agg')
 class Report(Model):
     collection: str = field(init=False, default="reports")
     state_code: str
-    state_name: str = field(init=False)
-    state_info: Dict = field(init=False)
+    state_name: str = field(default=None)
+    state_info: Dict = field(default=None)
     current: Dict = field(default=None)
     historic: List[Dict] = field(default=None)
     _id: str = field(default_factory=lambda: uuid.uuid4().hex)
@@ -25,7 +25,6 @@ class Report(Model):
     def __post_init__(self):
         self.state_code = self.state_code.upper()
         state = State(self.state_code)
-        state.get_info_by_code()
         self.state_name = state.name
         self.state_info = state.info
 
@@ -62,6 +61,7 @@ class Report(Model):
             'recovered': current['recovered'],
             'positiveIncrease': current['positiveIncrease']
         }
+        self.current['dateString'] = self.current['date'].strftime("%Y-%m-%d")
         historic = self.load_historic()
         self.historic = []
         for hist in historic:

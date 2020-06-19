@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header><h1> Create Alert </h1></header>
+    <section class="create-alert-form">
+        <form method="post">
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" class="form-control" id="state" name="state" placeholder="Colorado"/>
+            </div>
+            <div class="form-group">
+                <label for="case_limit">Case limit</label>
+                <input type="text" class="form-control" id="case_limit" name="case_limit" placeholder="500" aria-describedby="priceLimitHelp"/>
+                <small id="priceLimitHelp" class="form-text text-muted">
+                    Above how many new cases would you like get notified?
+                </small>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </section>
+{% endblock %}
