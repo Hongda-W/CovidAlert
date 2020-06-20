@@ -1,2 +1,2 @@
 web: uwsgi uwsgi.ini
-clock: python alert_update.py
+clock: python src/alert_update.py
