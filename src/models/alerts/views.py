@@ -1,6 +1,6 @@
 import io
 import base64
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from src.models.alerts.alert import Alert
 from src.models.reports.report import Report
 from src.common.state import State
@@ -24,7 +24,11 @@ def index():
 def new_alert():
     if request.method == 'POST':
         state_name = request.form.get('state')
-        case_limit = int(request.form['case_limit'])
+        try:
+            case_limit = int(request.form['case_limit'])
+        except ValueError:
+            flash(f"Case threshold must be an integer.", "warning")
+            return render_template("new_alert.html", options=state_names)
 
         try:
             report = Report.find_one_by("state_name", state_name)
@@ -36,6 +40,7 @@ def new_alert():
 
         alert = Alert(report._id, case_limit, session['email'])
         alert.save_to_mongo()
+        flash(f"Alert for {report.state_name} with {case_limit} cases threshold created successfully.", "success")
         return redirect(url_for('.index'))
 
     return render_template("new_alert.html", options=state_names)
@@ -47,12 +52,16 @@ def edit_alert(alert_id):
     alert = Alert.get_by_id(alert_id)
 
     if request.method == 'POST':
-        case_limit = float(request.form['case_limit'])
+        try:
+            case_limit = int(request.form['case_limit'])
+        except ValueError:
+            flash(f"Case threshold must be an integer.", "warning")
+            return render_template('edit_alert.html', alert=alert)
 
         alert.case_limit = case_limit
         if alert.user_email == session['email']:
             alert.save_to_mongo()
-
+            flash(f"Case threshold for {alert.report.state_name} updated to {case_limit}.", "success")
         return redirect(url_for('.index'))
 
     return render_template('edit_alert.html', alert=alert)
@@ -64,6 +73,7 @@ def delete_alert(alert_id):
     alert = Alert.get_by_id(alert_id)
     if alert.user_email == session['email']:
         alert.remove_from_mongo()
+        flash(f"Alert for {alert.report.state_name} with threshold of {alert.case_limit} cases removed.", "danger")
     return redirect(url_for('.index'))
 
 

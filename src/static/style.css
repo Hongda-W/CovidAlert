@@ -12,3 +12,5 @@ body { padding-top: 70px; }
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
+
+.list-group-item, .list-group-item:hover{ z-index: auto; }

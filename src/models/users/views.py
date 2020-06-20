@@ -25,7 +25,7 @@ def register():
             flash("You just registered!", "success")
             return redirect(url_for('.index'))
         except UserErrors.UserError as e:
-            flash("Can't register with current email", "danger")
+            flash("The current email is invalid or it has been registered.", "danger")
 
     return render_template('register.html')
 
