@@ -12,6 +12,7 @@ passlib = "*"
 requests = "*"
 matplotlib = "*"
 python-dotenv = "*"
+uwsgi = "*"
 
 [requires]
 python_version = "3.7"
