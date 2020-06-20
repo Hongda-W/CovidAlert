@@ -13,6 +13,7 @@ requests = "*"
 matplotlib = "*"
 python-dotenv = "*"
 uwsgi = "*"
+apscheduler = "*"
 
 [requires]
 python_version = "3.7"
