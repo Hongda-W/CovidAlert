@@ -15,7 +15,7 @@ class Mailgun:
     FROM_EMAIL = os.environ.get("FROM_EMAIL")
 
     @classmethod
-    def send_email(cls, email: List[str], subject: str, text: str) -> Response:
+    def send_email(cls, email: List[str], subject: str, text: str, html: str) -> Response:
         api_key = os.environ.get("MAILGUN_API_KEY", None)
         domain = os.environ.get("MAILGUN_DOMAIN", None)
         if api_key is None:
@@ -28,7 +28,8 @@ class Mailgun:
                             "from": f"{cls.FROM_TITLE} <{cls.FROM_EMAIL}>",
                             "to": email,
                             "subject": subject,
-                            "text": text
+                            "text": text,
+                            "html": html
                         })
         if response.status_code != 200:
             print(response.json())
