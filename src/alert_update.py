@@ -6,8 +6,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 sched = BlockingScheduler()
 
 
-@sched.scheduled_job('cron', hour=17)
-def scheduled_job():
+def send_alerts():
     load_dotenv()
     alerts = Alert.all()
 
@@ -17,4 +16,14 @@ def scheduled_job():
         alert.json()
 
 
-sched.run()
+@sched.scheduled_job('interval', minutes=5)
+def timed_job():
+    send_alerts()
+
+
+@sched.scheduled_job('cron', hour=17)
+def scheduled_job():
+    send_alerts()
+
+
+sched.start()
