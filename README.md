@@ -9,7 +9,7 @@ python run.py
 
 ## Description
 
-This webapp retrieves covid-19 statistics for the U.S. from [https://covidtracking.com/api](https://covidtracking.com/api). 
+This webapp retrieves covid-19 statistics for the U.S. from [https://covidtracking.com/api](https://covidtracking.com/api). Link to my web app that allows you to sign up for your alerts is [https://covid19-alert.herokuapp.com](https://covid19-alert.herokuapp.com).
 
 ## Implementation
 

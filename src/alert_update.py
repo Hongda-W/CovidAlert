@@ -7,12 +7,12 @@ from dotenv import load_dotenv
 load_dotenv()
 alerts = Alert.all()
 
-print(os.environ.get("FROM_TITLE"))
-print(os.environ.get("FROM_EMAIL"))
-print(os.environ.get("MAILGUN_API_KEY", None))
-print(os.environ.get("MAILGUN_DOMAIN", None))
-print(os.environ.get('ADMIN'))
-print(os.environ.get('DEBUG'))
+# print(os.environ.get("FROM_TITLE"))
+# print(os.environ.get("FROM_EMAIL"))
+# print(os.environ.get("MAILGUN_API_KEY", None))
+# print(os.environ.get("MAILGUN_DOMAIN", None))
+# print(os.environ.get('ADMIN'))
+# print(os.environ.get('DEBUG'))
 User.welcome("example@example.com")
 
 # for alert in alerts:
