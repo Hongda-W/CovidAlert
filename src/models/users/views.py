@@ -2,6 +2,7 @@ from flask import Blueprint, request, session, url_for, render_template, redirec
 from src.models.users import User, UserErrors
 from src.models.alerts.alert import Alert
 from src.models.users import requires_login
+from src.common.mailgun import MailgunException
 
 user_blueprint = Blueprint('users', __name__)
 
@@ -24,8 +25,13 @@ def register():
             session['email'] = email
             flash("You just registered!", "success")
             return redirect(url_for('.index'))
-        except UserErrors.UserError as e:
+        except UserErrors.UserError:
             flash("The current email is invalid or it has been registered.", "danger")
+        except MailgunException:
+            session['email'] = email
+            flash(f"You just registered but not opted in to receive email from Mailgun. Please contact the "
+                  f"administrator.", "warning")
+            return redirect(url_for('.index'))
 
     return render_template('register.html')
 

@@ -5,7 +5,7 @@ from typing import Dict
 from src.common.utils import Utils
 import src.models.users.errors as UserErrors
 from src.models.alerts.alert import Alert
-from src.common.mailgun import Mailgun, MailgunException
+from src.common.mailgun import Mailgun
 
 
 @dataclass
@@ -54,14 +54,13 @@ class User(Model):
 
     @classmethod
     def welcome(cls, email: str) -> None:
-        try:
-            Mailgun.send_email(
-                [email],
-                f"Welcome, you signed up for Covid-19 Alerts",
-                f"Thank you for registering your account with us. You can log in and add alerts on our web page. We will notify you through email if new cases in your subscribed region exceeds the threshold you choose.\n\nThank you.",
-            )
-        except MailgunException:
-            print(f"You can't receive email through {email} from mailgun. Please contact the administrator.")
+        Mailgun.send_email(
+            [email],
+            f"Welcome, you signed up for Covid-19 Alerts",
+            f"Thank you for registering your account with us. You can log in and add alerts on our web page. We will "
+            f"notify you through email if new cases in your subscribed region exceeds the threshold you "
+            f"choose.\n\nThank you.",
+        )
 
     def json(self) -> Dict:
         return {

@@ -32,5 +32,5 @@ class Mailgun:
                         })
         if response.status_code != 200:
             print(response.json())
-            raise MailgunException('An error occured while sending e-mail.')
+            raise MailgunException('An error occurred while sending e-mail.')
         return response
