@@ -58,7 +58,7 @@ class User(Model):
             [email],
             "Welcome, you signed up for Covid-19 Alerts",
             "Thank you for registering your account with us. You can log in and add alerts on our web page. We will notify you through email if new cases in your subscribed region exceeds the threshold you choose.\n",
-            '<p> Please click the following link to log in and continue exploring.</p><p>Click <a href="https://covid19-alert.herokuapp.com">here</a> to continue.</p>',
+            '<p> Thank you for registering your account with us. You can log in and add alerts on our web page. We will notify you through email if new cases in your subscribed region exceeds the threshold you choose.</p><p>Please click the following link to log in and continue exploring.</p><p>Click <a href="https://covid19-alert.herokuapp.com">here</a> to continue.</p><p></p><p>Thank you</p>',
         )
 
     def json(self) -> Dict:

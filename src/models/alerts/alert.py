@@ -40,8 +40,8 @@ class Alert(Model):
                     [self.user_email],
                     f"Covid-19 Alert for {self.report.state_name}",
                     f"New cases in {self.report.state_name} has reached over {self.case_limit}. New cases updated today is {self.report.current['positiveIncrease']}.\nSummary:\nNew cases:{self.report.current['positiveIncrease']}\nTotal cases: {self.report.current['positive']}\nTotal tests: {self.report.current['posNeg']}\nTotal deaths: {self.report.current['death']}\nTotal hospitalized: {self.report.current['hospitalized']}\nCurrently hospitalized: {self.report.current['hospitalizedCurrently']}",
-                    '<p> Please click the following link to log in and view your subscriptions.</p><p>Click <a href="https://covid19-alert.herokuapp.com">here</a> to continue.</p>'
+                    f'<p>New cases in {self.report.state_name} has reached over {self.case_limit}. New cases updated today is {self.report.current["positiveIncrease"]}.</p><p>Summary:</p><p>New cases: {self.report.current["positiveIncrease"]}</p><p>Total cases: {self.report.current["positive"]} </p><p>Total tests: {self.report.current["posNeg"]}</p><p>Total deaths: {self.report.current["death"]} </p><p>Total hospitalized: {self.report.current["hospitalized"]} </p><p>Currently hospitalized: {self.report.current["hospitalizedCurrently"]} </p><p>Please click the following link to log in and view your subscriptions. </p><p>Click <a href="https://covid19-alert.herokuapp.com">here</a> to continue.</p>'
                 )
                 print(f"Alert sent to {self.user_email} for {self.report.state_name}.")
             except MailgunException:
-                print(f"You can't receive email through {email} from mailgun. Please contact the administrator.")
+                print(f"You can't receive email through {self.user_email} from mailgun. Please contact the administrator.")
