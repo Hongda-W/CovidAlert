@@ -18,7 +18,6 @@ def index():
     alerts = Alert.find_many_by('user_email', session['email'])
     for alert in alerts:
         alert.report.load_data()
-        alert.report.save_to_mongo()
     return render_template('alerts_index.html', alerts=alerts)
 
 
@@ -39,7 +38,6 @@ def new_alert():
             state = State(None, state_name)
             report = Report(state.code)
         report.load_data()
-        report.save_to_mongo()
 
         alert = Alert(report._id, case_limit, session['email'])
         alert.save_to_mongo()
@@ -65,7 +63,6 @@ def edit_alert(alert_id):
         if alert.user_email == session['email']:
             alert.save_to_mongo()
             alert.report.load_data()
-            alert.report.save_to_mongo()
             flash(f"Case threshold for {alert.report.state_name} updated to {case_limit}.", "success")
         return redirect(url_for('.index'))
 

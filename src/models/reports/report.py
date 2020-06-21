@@ -75,6 +75,7 @@ class Report(Model):
                 'hospitalizedCurrently': hist['hospitalizedCurrently'],
                 'recovered': hist['recovered']
             })
+        self.save_to_mongo()
 
     def plot_historic(self):
         dates = []

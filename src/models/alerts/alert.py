@@ -29,7 +29,6 @@ class Alert(Model):
 
     def load_report_details(self):
         self.report.load_data()
-        self.report.save_to_mongo()
         new_case = self.report.current['positiveIncrease']
         return new_case
 
