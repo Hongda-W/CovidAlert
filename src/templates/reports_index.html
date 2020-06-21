@@ -6,7 +6,7 @@
 </header>
 <section>
     <div class="list-group mb-3">
-        {% for report, subs in zip(reports, subscribers) %}
+        {% for report, subs in reports|zip(subscribers) %}
         <li class="list-group-item">
             <h4>{{ report.state_name }}</h4>
             <p>

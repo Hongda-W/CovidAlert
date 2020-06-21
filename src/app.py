@@ -4,6 +4,7 @@ from src.common.database import Database
 from src.models.users.views import user_blueprint
 from src.models.alerts.views import alert_blueprint
 from src.models.reports.views import report_blueprint
+import jinja2
 
 
 app = Flask(__name__)
@@ -12,6 +13,7 @@ app.config.update(
     ADMIN=os.environ.get('ADMIN'),
     DEBUG=os.environ.get('DEBUG')
 )
+app.jinja_env.filters['zip'] = zip
 
 
 @app.before_first_request
