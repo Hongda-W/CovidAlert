@@ -1,3 +1,5 @@
+import io
+import base64
 from flask import Blueprint, render_template, redirect, url_for, flash
 from src.models.alerts.alert import Alert
 from src.models.reports.report import Report
@@ -20,6 +22,7 @@ def index():
         subscribers.append(len(alerts))
     sind = sorted(range(len(subscribers)), key=lambda k: -subscribers[k])
     reports = [reports[i] for i in sind]
+    subscribers = [reports[i] for i in sind]
     for report in reports:
         report.load_data()
     return render_template('reports_index.html', reports=reports, subscribers=subscribers)

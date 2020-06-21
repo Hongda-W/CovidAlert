@@ -19,7 +19,7 @@ def requires_admin(f: Callable) -> Callable:
         if not session.get('email'):
             flash('You need to be an administrator to access this function.', 'danger')
             return redirect(url_for('users.login'))
-        if session.get('email') != current_app.config.get('ADMIN', ''):
+        if session.get('email') not in current_app.config.get('ADMIN', []):
             flash('You need to be an administrator to access this function.', 'danger')
             return redirect(url_for('reports.index'))
         return f(*args, **kwargs)

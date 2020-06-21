@@ -4,7 +4,6 @@ from src.common.database import Database
 from src.models.users.views import user_blueprint
 from src.models.alerts.views import alert_blueprint
 from src.models.reports.views import report_blueprint
-import jinja2
 
 
 app = Flask(__name__)
