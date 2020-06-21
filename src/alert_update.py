@@ -16,12 +16,7 @@ def send_alerts():
         alert.json()
 
 
-@sched.scheduled_job('interval', minutes=5)
-def timed_job():
-    send_alerts()
-
-
-@sched.scheduled_job('cron', hour=17)
+@sched.scheduled_job('cron', hour=23)
 def scheduled_job():
     send_alerts()
 
