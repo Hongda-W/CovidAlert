@@ -1,3 +1,4 @@
 test_report.py
 test.png
 *__pycache__*
+.env

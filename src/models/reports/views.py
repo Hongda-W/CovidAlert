@@ -32,10 +32,13 @@ def index():
 @requires_admin
 def delete_report(report_id):
     report = Report.get_by_id(report_id)
-    alerts = Alert.find_many_by("report_id", report_id)
-    for alert in alerts:
-        alert.remove_from_mongo()
-        flash(f"Alert for {alert.report.state_name} with threshold of {alert.case_limit} cases removed.", "danger")
+    try:
+        alerts = Alert.find_many_by("report_id", report_id)
+        for alert in alerts:
+            alert.remove_from_mongo()
+            flash(f"Alert for {alert.report.state_name} with threshold of {alert.case_limit} cases removed.", "danger")
+    except TypeError:
+        print(f"No alerts associated with {report.state_name}.")
     report.remove_from_mongo()
     flash(f"Report for {report.state_name} removed from database.", "danger")
     return redirect(url_for('.index'))

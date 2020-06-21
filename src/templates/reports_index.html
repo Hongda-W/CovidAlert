@@ -12,13 +12,13 @@
             <p>
                 <a href="{{ url_for('reports.plot_report', report_id=report._id) }}">{{ report.state_name }} (New cases: {{ report.current['positiveIncrease'] }}, number of subscribers: {{ subs }} ) <span class="fa fa-bar-chart" style="font-size:30px;color:blue;"></span> </a>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger float-md-right" data-toggle="modal" data-target="#exampleModal"><span class="fa fa-trash" style="font-size:30px;color:black;"></span> Remove from database</button>
+                <button type="button" class="btn btn-danger float-md-right" data-toggle="modal" data-target="#{{ report._id }}"><span class="fa fa-trash" style="font-size:30px;color:black;"></span> Remove from database</button>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="{{ report._id }}" tabindex="-1" role="dialog" aria-labelledby="{{ report._id }}Label" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">You are removing report for {{ report.state_name }}</h5>
+                        <h5 class="modal-title" id="{{ report._id }}Label">You are removing report for {{ report.state_name }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>

@@ -13,19 +13,19 @@
                 <a href="{{ url_for('alerts.plot_report', alert_id=alert._id) }}">{{ alert.report.state_name }} (New cases: {{ alert.report.current['positiveIncrease'] }}, case limit {{ alert.case_limit }} ) <span class="fa fa-bar-chart" style="font-size:30px;color:blue;"></span> </a>
                 <a class="btn btn-secondary float-md-left ml-2 mr-5" href="{{ url_for('alerts.edit_alert', alert_id=alert._id) }}">Edit</a>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger float-md-right" data-toggle="modal" data-target="#exampleModal"><span class="fa fa-trash" style="font-size:30px;color:black;"></span> Unsubscribe</button>
+                <button type="button" class="btn btn-danger float-md-right" data-toggle="modal" data-target="#{{ alert._id }}"><span class="fa fa-trash" style="font-size:30px;color:black;"></span> Unsubscribe</button>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="{{ alert._id }}" tabindex="-1" role="dialog" aria-labelledby="{{ alert_id }}Label" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">You are removing your subscription</h5>
+                        <h5 class="modal-title" id="{{ alert._id }}Label">You are removing your subscription for {{ alert.report.state_name }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
-                        Are you sure you want to delete this subscription? Changes cannot be reverted!
+                        Are you sure you want to delete this subscription for {{ alert.report.state_name }} with case limit {{ alert.case_limit }}? Changes cannot be reverted!
                       </div>
                       <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
