@@ -16,6 +16,9 @@ state_names = [ele["name"] for ele in code_name]
 @requires_login  # In Flask this decorator must go under the route decorator
 def index():
     alerts = Alert.find_many_by('user_email', session['email'])
+    for alert in alerts:
+        alert.report.load_data()
+        alert.report.save_to_mongo()
     return render_template('alerts_index.html', alerts=alerts)
 
 
@@ -61,6 +64,8 @@ def edit_alert(alert_id):
         alert.case_limit = case_limit
         if alert.user_email == session['email']:
             alert.save_to_mongo()
+            alert.report.load_data()
+            alert.report.save_to_mongo()
             flash(f"Case threshold for {alert.report.state_name} updated to {case_limit}.", "success")
         return redirect(url_for('.index'))
 
